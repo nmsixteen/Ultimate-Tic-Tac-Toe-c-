@@ -1,0 +1,188 @@
+#include "stdafx.h"
+#include <windows.h>
+#include <conio.h>
+#include <time.h> 
+#include <iostream>
+using namespace std;
+
+char tictactoevalues[] = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '2', '3', '4', '5', '6', '7', '8', '9','1', '2', '3', '4', '5', '6', '7', '8', '9','1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+char boardstates[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+
+static int input = 0, RNG = 0, inputletter=0;
+static int boardstatea, boardstateb, boardstatec, boardstated, boardstatee, boardstatef, boardstateg, boardstateh, boardstatei;
+
+void setCursorPosition(int x, int y)
+{
+	static const HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	std::cout.flush();
+	COORD coord = { (SHORT)x, (SHORT)y };
+	SetConsoleCursorPosition(hOut, coord);
+}
+
+void tictactoewinchecker(char sqr1, char sqr2, char sqr3, char sqr4, char sqr5, char sqr6, char sqr7, char sqr8, char sqr9)
+{
+	if ((sqr5 == 'X' && ((sqr2 == 'X'&& sqr8 == 'X') || (sqr4 == 'X'&& sqr6 == 'X') || (sqr1 == 'X'&& sqr9 == 'X') || (sqr3 == 'X'&& sqr7 == 'X'))) || ((sqr1 == 'X' && ((sqr2 == 'X'&& sqr3 == 'X') || (sqr4 == 'X'&& sqr7 == 'X'))) || (sqr9 == 'X' && ((sqr8 == 'X'&& sqr7 == 'X') || (sqr8 == 'X'&& sqr7 == 'X') || (sqr6 == 'X'&& sqr3 == 'X')))))
+	{
+		SetConsoleTextAttribute(hConsole, 244);
+        //SetConsoleTextAttribute(hConsole, 4);
+		cout << "X wins";
+	}
+	if ((sqr5 == 'O' && ((sqr2 == 'O'&& sqr8 == 'O') || (sqr4 == 'O'&& sqr6 == 'O') || (sqr1 == 'O'&& sqr9 == 'O') || (sqr3 == 'O'&& sqr7 == 'O'))) || ((sqr1 == 'O' && ((sqr2 == 'O'&& sqr3 == 'O') || (sqr4 == 'O'&& sqr7 == 'O'))) || (sqr9 == 'O' && ((sqr8 == 'O'&& sqr7 == 'O') || (sqr8 == 'O'&& sqr7 == 'O') || (sqr6 == 'O'&& sqr3 == 'O')))))
+	{
+		SetConsoleTextAttribute(hConsole, 249);
+		//SetConsoleTextAttribute(hConsole, 9);
+		cout << "O wins";
+	}
+	if ((sqr1 == 'X' || sqr1 == 'O') && (sqr2 == 'X' || sqr2 == 'O') && (sqr3 == 'X' || sqr3 == 'O') && (sqr4 == 'X' || sqr4 == 'O') && (sqr5 == 'X' || sqr5 == 'O') && (sqr6 == 'X' || sqr6 == 'O') && (sqr7 == 'X' || sqr7 == 'O') && (sqr8 == 'X' || sqr8== 'O') && (sqr9 == 'X' || sqr9 == 'O'))
+	{
+		SetConsoleTextAttribute(hConsole, 253);
+		//SetConsoleTextAttribute(hConsole, 13);
+		cout << "catsgame";
+	}
+}
+void tictactoecheckercompilation()
+{
+	if (boardstatea>0)
+	{
+		tictactoewinchecker(tictactoevalues[0], tictactoevalues[1], tictactoevalues[2], tictactoevalues[3], tictactoevalues[4], tictactoevalues[5], tictactoevalues[6], tictactoevalues[7], tictactoevalues[8]);
+	}
+	tictactoewinchecker(tictactoevalues[9], tictactoevalues[10], tictactoevalues[11], tictactoevalues[12], tictactoevalues[13], tictactoevalues[14], tictactoevalues[15], tictactoevalues[16], tictactoevalues[17]);
+	tictactoewinchecker(tictactoevalues[18], tictactoevalues[19], tictactoevalues[20], tictactoevalues[21], tictactoevalues[22], tictactoevalues[23], tictactoevalues[24], tictactoevalues[25], tictactoevalues[26]);
+	tictactoewinchecker(tictactoevalues[27], tictactoevalues[28], tictactoevalues[29], tictactoevalues[30], tictactoevalues[31], tictactoevalues[32], tictactoevalues[33], tictactoevalues[34], tictactoevalues[35]);
+	tictactoewinchecker(tictactoevalues[36], tictactoevalues[37], tictactoevalues[38], tictactoevalues[39], tictactoevalues[40], tictactoevalues[41], tictactoevalues[42], tictactoevalues[43], tictactoevalues[44]);
+	tictactoewinchecker(tictactoevalues[45], tictactoevalues[46], tictactoevalues[47], tictactoevalues[48], tictactoevalues[49], tictactoevalues[50], tictactoevalues[51], tictactoevalues[52], tictactoevalues[53]);
+	tictactoewinchecker(tictactoevalues[54], tictactoevalues[55], tictactoevalues[56], tictactoevalues[57], tictactoevalues[58], tictactoevalues[59], tictactoevalues[60], tictactoevalues[61], tictactoevalues[62]);
+	tictactoewinchecker(tictactoevalues[63], tictactoevalues[64], tictactoevalues[65], tictactoevalues[66], tictactoevalues[67], tictactoevalues[68], tictactoevalues[69], tictactoevalues[70], tictactoevalues[71]);
+	tictactoewinchecker(tictactoevalues[72], tictactoevalues[73], tictactoevalues[74], tictactoevalues[75], tictactoevalues[76], tictactoevalues[77], tictactoevalues[78], tictactoevalues[79], tictactoevalues[80]);
+}
+
+int main() {
+
+	//SetConsoleTextAttribute(hConsole, 15);
+
+	SetConsoleTextAttribute(hConsole, 240);
+	cout << " ___________       ___________       ___________  "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "ULTIMATE TIC TAC TOE" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 1 | 2 | 3 |  #  | 1 | 2 | 3 |  #  | 1 | 2 | 3 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "Press the letter that matches the board you want to use." << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 4 | 5 | 6 |  #  | 4 | 5 | 6 |  #  | 4 | 5 | 6 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "Then press the number of the square to place your move." << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 7 | 8 | 9 |  #  | 7 | 8 | 9 |  #  | 7 | 8 | 9 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "      A        #        B        #        C       "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << " # # # # # # # # # # # # # # # # # # # # # # # #  "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << " ___________   #   ___________   #   ___________  "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 1 | 2 | 3 |  #  | 1 | 2 | 3 |  #  | 1 | 2 | 3 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 4 | 5 | 6 |  #  | 4 | 5 | 6 |  #  | 4 | 5 | 6 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 7 | 8 | 9 |  #  | 7 | 8 | 9 |  #  | 7 | 8 | 9 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "      D        #        E        #        F       "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << " # # # # # # # # # # # # # # # # # # # # # # # #  "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << " ___________   #   ___________   #   ___________  "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 1 | 2 | 3 |  #  | 1 | 2 | 3 |  #  | 1 | 2 | 3 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 4 | 5 | 6 |  #  | 4 | 5 | 6 |  #  | 4 | 5 | 6 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "| 7 | 8 | 9 |  #  | 7 | 8 | 9 |  #  | 7 | 8 | 9 | "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "|___|___|___|  #  |___|___|___|  #  |___|___|___| "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	cout << "      G        #        H        #        I       "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+	while (true)
+	{
+		inputletter = _getch();
+		//SetConsoleTextAttribute(hConsole, 10); //menu select color
+		if (inputletter > 96 && inputletter < 106)
+		{
+			input = _getch();
+			input = input - 48;
+			int counterselect = -1;
+			int cursorpositionY = 7;
+			int cursorpositionX = 6;
+			do
+			{
+				std::cout << boardstates[counterselect];
+				counterselect++;
+				setCursorPosition(cursorpositionX, cursorpositionY);
+				SetConsoleTextAttribute(hConsole, 244);
+				cursorpositionX = cursorpositionX + 18;
+				if (cursorpositionX > 42)
+				{
+					cursorpositionX = 6;
+					cursorpositionY = cursorpositionY + 9;
+				}
+			} while (counterselect <= 8);
+			cout << "                                                  "; SetConsoleTextAttribute(hConsole, 15);  cout << "          "; cout << "" << endl; 	SetConsoleTextAttribute(hConsole, 240);
+			if (tictactoevalues[((input - 1) + ((inputletter - 97) * 9))] != 'X' && tictactoevalues[((input - 1) + ((inputletter - 97) * 9))] != 'O')
+			{
+				tictactoevalues[((input - 1) + ((inputletter - 97) * 9))] = 'X';
+
+				int counter = 0;
+				int counter2 = 0;
+				int counter3 = 0;
+				int counter4 = 0;
+
+				int valuescounter = -1;
+				int orderfixes = 3;
+
+
+				int placer = 2;
+				int placer2 = 1;
+				int countersetting1 = 5;
+				int countersetting2 = 8;
+
+
+				do
+				{
+					counter++;
+					counter2++;
+					counter3++;
+					counter4++;
+
+					valuescounter++;
+
+					setCursorPosition(placer, placer2);
+
+					//SetConsoleTextAttribute(hConsole, 15);
+					SetConsoleTextAttribute(hConsole, 240);
+
+					if (tictactoevalues[valuescounter] == 'X')
+					{
+						//SetConsoleTextAttribute(hConsole, 4);
+						SetConsoleTextAttribute(hConsole, 244);
+					}
+					if (tictactoevalues[valuescounter] == 'O')
+					{
+						SetConsoleTextAttribute(hConsole, 9);
+					}
+					std::cout << tictactoevalues[valuescounter];
+					placer = placer + 4;
+					if (counter2 == 3)
+					{
+						placer2 = placer2 + 2;
+						counter2 = 0;
+						placer = placer - 12;
+					}
+					if (counter3 == 9)
+					{
+						placer = placer + 18;
+						placer2 = placer2 - 6;
+						counter2 = 0;
+						counter3 = 0;
+					}
+					if (counter4 == 27)
+					{
+						placer = placer - 54;
+						placer2 = placer2 + 9;
+						counter4 = 0;
+					}
+				} while (counter < 81);
+
+				//shows winning
+
+				tictactoecheckercompilation();
+			}
+		}
+	}
+}
